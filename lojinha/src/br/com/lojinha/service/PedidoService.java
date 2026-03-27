@@ -44,17 +44,30 @@ public class PedidoService {
         carrinho.forEach(System.out::println);
     }
 
-    public void finalizarPedido(TipoPagamento pagamento) {
+    public void finalizarPedido(TipoPagamento tipoPagamento) {
 
         if (carrinho.isEmpty()) {
             System.out.println("Carrinho vazio!");
             return;
         }
 
-        Pedido pedido = new Pedido(1, cliente, new ArrayList<>(carrinho), pagamento);
+        Pedido pedido = new Pedido(1, cliente, new ArrayList<>(carrinho), tipoPagamento);
 
-        System.out.println("\nPedido finalizado:");
+        System.out.println("\nPedido:");
         System.out.println(pedido);
+
+        carrinho.clear();
+
+        Pagamento pagamento = new Pagamento(pedido, tipoPagamento);
+
+        //adicioando o singleton
+        pagamento.processar();
+
+        System.out.println("\nPedido:");
+        System.out.println(pedido);
+
+        System.out.println("\nDetalhes do pagamento:");
+        System.out.println(pagamento);
 
         carrinho.clear();
     }
